@@ -1,0 +1,59 @@
+BOOTPROTO=none
+NAME=ens33
+DEVICE=ens33
+ONBOOT=yes
+BRIDGE=br0
+
+vim /etc/sysconfig/network-scripts/ifcfg-br0
+DEVICE=br0
+ONBOOT=yes
+BOOTPROTO=none
+IPADDR=10.3.13.75
+NETMASK=255.255.255.0
+TYPE=Bridge
+
+https://www.jianshu.com/p/2b98e0f87720
+
+简书 (https://www.jianshu.com/p/2b98e0f87720)
+CentOS中yum安装ffmpeg
+1.升级系统 sudo yum install epel-release -ysudo yum update -ysudo shutdown -r now 2.安装Nux D...
+
+root@localhost ~]# vim /etc/sysconfig/network-scripts/ifcfg-ens33
+
+TYPE=Ethernet　　　接口类型，常见的有ETHERNET（以太网）、Bridge(桥接接口)
+BOOTPROTO=dhcp　　激活此接口使用什么协议来配置接口属性：dhcp，boot，static，none
+DEFROUTE=yes　　　
+PEERDNS=yes　　如果BOOTPROTO的值为“dhcp”，是否允许dhcp
+DNS1：第一DNS服务器指向；若/etc/resolve的配置文件也有，则此处优先
+DNS2：备用DNS服务器指向；
+PEERROUTES=yes
+IPV4_FAILURE_FATAL=no
+IPV6INIT=yes　　是否初始化IPV6
+IPV6_AUTOCONF=yes
+IPV6_DEFROUTE=yes
+IPV6_PEERDNS=yes
+IPV6_PEERROUTES=yes
+IPV6_FAILURE_FATAL=no
+IPV6_ADDR_GEN_MODE=stable-privacy
+NAME=ens33
+UUID=0ea5507b-feab-4d8a-b582-e1874ca0bb97　　此设备的唯一标识
+DEVICE=ens33　　此配置文件对应的设备名称
+ONBOOT=yes　　操作系统启动时，在系统引导过程中，是否激活此接口
+IPADDR： 指明IP地址；
+NETMASK：子网掩码；CentOS 7支持使用PREFIX以长度方式指明子网掩码；
+GATEWAY：默认网关；
+USERCTL：是否允许普通用户控制此设备；
+复制代码
+　　eg：
+
+复制代码
+# vim ifcfg-eth0
+    1、设置：BOOTPROTO=static
+    2、增加：
+        IPADDR=172.16.100.12
+    NETMASK=255.255.0.0
+        GATEWAY=172.16.0.1
+    DNS1=172.16.0.1    
+# route -n 执行命令，查看发现此时还没有生效，重启后后效
+# ifconfig eth0 down ifconfig eth0 up  禁用网卡就，再重启，不建议，建议重启网络
+# service network restart 重启 
